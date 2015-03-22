@@ -1,0 +1,17 @@
+#include "template.header"
+
+
+CLASSNAME::CLASSNAME()
+{
+	/* Generally you are defining your layout and such here */
+}
+
+void CLASSNAME::analysis(char * fileString, int fileSize, bool locality, QProgressBar * pb)
+{
+	/* then doing stuff cool here */
+}
+
+void CLASSNAME::clean()
+{
+	/*this is where code goes to free memory in between runs (like say calling plotter::clean())*/
+}

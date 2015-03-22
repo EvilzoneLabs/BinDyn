@@ -1,0 +1,17 @@
+#include <QObject>
+#include <QProgressBar>
+
+class CLASSNAME : public QWidget 
+{
+	Q_OBJECT
+	
+	public slots:
+		void analysis(char*,int,bool,QProgressBar*);
+		void clean();
+
+	public:
+		CLASSNAME();
+	
+	private:
+		/*Generally all your variables you need in analysis and the constructor go here */
+};
