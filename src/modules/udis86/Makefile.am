@@ -1,38 +1,52 @@
-ACLOCAL_AMFLAGS = -I build/m4
+#
+# -- udis86/libudis86
+#
 
-SUBDIRS = scripts libudis86 udcli docs tests
+PYTHON  = @PYTHON@
+OPTABLE = @top_srcdir@/docs/x86/optable.xml
 
-MAINTAINERCLEANFILES = \
-    Makefile.in \
-    configure \
-	config.h.in \
-	config.h.in~ \
-    missing \
-    aclocal.m4 \
-    build/config.guess \
-    build/config.sub \
-    build/compile \
-    build/config.guess \
-    build/config.sub \
-    build/depcomp \
-    build/install-sh \
-    build/ltmain.sh \
-    build/missing
+MAINTAINERCLEANFILES = Makefile.in
 
-include_ladir = ${includedir}
-include_la_HEADERS = udis86.h
+lib_LTLIBRARIES	= libudis86.la
 
-.PHONY: libudis86 udcli tests docs
+libudis86_la_SOURCES =	\
+    itab.c \
+    decode.c \
+    syn.c \
+    syn-intel.c \
+    syn-att.c \
+    udis86.c \
+	udint.h \
+    syn.h \
+    decode.h
 
-libudis86:
-	$(MAKE) -C $@
+include_ladir = ${includedir}/libudis86
+include_la_HEADERS = \
+    types.h \
+    extern.h \
+    itab.h
 
-udcli: libudis86
-	$(MAKE) -C $@
 
-tests: check
+BUILT_SOURCES = \
+    itab.c \
+    itab.h
+
+#
+# DLLs may not contain undefined symbol references.  
+# We have the linker check this explicitly.
+#
+if TARGET_WINDOWS
+libudis86_la_LDFLAGS = -no-undefined -version-info 0:0:0
+endif
+
+itab.c itab.h: $(OPTABLE) \
+			   $(top_srcdir)/scripts/ud_itab.py \
+               $(top_srcdir)/scripts/ud_opcode.py \
+               $(top_srcdir)/scripts/ud_optable.py
+	$(PYTHON) $(top_srcdir)/scripts/ud_itab.py $(OPTABLE) $(srcdir)
+
+
+clean-local:
+	rm -rf $(BUILT_SOURCES)
 
 maintainer-clean-local:
-	-rm -rf build/m4
-	-rm -rf build
-	-rm -rf autom4te.cache

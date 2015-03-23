@@ -1,6 +1,6 @@
-/* udis86 - udis86.h
+/* udis86 - libudis86/syn.h
  *
- * Copyright (c) 2002-2009 Vivek Thampi
+ * Copyright (c) 2002-2009
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -23,11 +23,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef UDIS86_H
-#define UDIS86_H
+#ifndef UD_SYN_H
+#define UD_SYN_H
 
 #include "types.h"
-#include "extern.h"
-#include "itab.h"
+#ifndef __UD_STANDALONE__
+# include <stdarg.h>
+#endif /* __UD_STANDALONE__ */
 
+extern const char* ud_reg_tab[];
+
+uint64_t ud_syn_rel_target(struct ud*, struct ud_operand*);
+
+#ifdef __GNUC__
+int ud_asmprintf(struct ud *u, const char *fmt, ...)
+    __attribute__ ((format (printf, 2, 3)));
+#else
+int ud_asmprintf(struct ud *u, const char *fmt, ...);
 #endif
+
+void ud_syn_print_addr(struct ud *u, uint64_t addr);
+void ud_syn_print_imm(struct ud* u, const struct ud_operand *op);
+void ud_syn_print_mem_disp(struct ud* u, const struct ud_operand *, int sign);
+
+#endif /* UD_SYN_H */
+
+/*
+vim: set ts=2 sw=2 expandtab
+*/
