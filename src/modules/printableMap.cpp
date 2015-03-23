@@ -125,7 +125,7 @@ void PrintableMap::getPointRgb(unsigned char temp, point * localPoints, size_t c
 	else if (temp == 255) refCol = &ffCol;
 	else if (temp > 32 && temp < 127) refCol = &printableCol;
 	else if (temp < 32) refCol = &belowCol;
-	else if (temp > 127) refCol = &aboveCol;
+	else  refCol = &aboveCol;
 	localPoints[counter].r = refCol->red();
 	localPoints[counter].g = refCol->green();
 	localPoints[counter].b = refCol->blue();

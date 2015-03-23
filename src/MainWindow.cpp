@@ -23,6 +23,7 @@
 #include "modules/signatureScan.h"
 #include "modules/statistics.h"
 #include "modules/stringScan.h"
+#include "modules/dissasemble.h"
 
 MainWindow::MainWindow( )
 {
@@ -94,7 +95,8 @@ MainWindow::MainWindow( )
 		tab_widget->addTab( new PrintableMap( ), "Printable Map" );
 		tab_widget->addTab( new EntropyMap( ), "Entropy Map" );
 		tab_widget->addTab( new SelfSim( ), "Self Similarity Plot" );
-		tab_widget->addTab( new Conversions( ), "Conversion Aide" );
+		//tab_widget->addTab( new Conversions( ), "Conversion Aide" );
+		tab_widget->addTab( new Dissasemble( ), "Dissasembler Helper" );
 		mainLayout->addWidget( tab_widget );
 	//Generate the progress bar and set the layout
 		pb = new QProgressBar(  );
@@ -144,9 +146,6 @@ void MainWindow::analysisChoice( )
 
 void MainWindow::clearWidgets()
 {
-	int tCount = tab_widget->count();
-	int tActive = tab_widget->currentIndex();
-	for (int i = 0; i < tCount; i++)
-		if (i != tActive)
+	for (int i = 0; i < tab_widget->count(); i++)
 			QMetaObject::invokeMethod( tab_widget->widget(i),"clean",Qt::DirectConnection);
 }

@@ -5,6 +5,7 @@
 * 
 * Todo:
 * conversions
+* dissassembler
 * possibly width changer inside the plotters?
 * deque suggestions?
 * refactor. No code smell allowed.
