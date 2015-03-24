@@ -16,7 +16,7 @@ class BytePlot : public QWidget
 		BytePlot( );
 		
 	public slots:
-		void analysis( char *, size_t, bool, QProgressBar *);
+		void analysis( char *, size_t, QProgressBar *);
 		void clean();
 		
 	private:

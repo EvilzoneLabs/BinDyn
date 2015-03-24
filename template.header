@@ -6,7 +6,7 @@ class CLASSNAME : public QWidget
 	Q_OBJECT
 	
 	public slots:
-		void analysis(char*,int,bool,QProgressBar*);
+		void analysis(char*,int,QProgressBar*);
 		void clean();
 
 	public:

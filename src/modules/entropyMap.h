@@ -20,11 +20,11 @@ class EntropyMap : public QWidget
 		EntropyMap();	
 		
 	public slots:
-		void analysis(char *,  size_t, bool, QProgressBar * );
+		void analysis(char *,  size_t, QProgressBar * );
 		void clean();
 		
 	private:
-	Plotter * plot;
+		Plotter * plot;
 		QSlider * jump;
 		QTextEdit * output;
 		QCheckBox * listThreshold;

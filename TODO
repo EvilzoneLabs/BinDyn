@@ -1,0 +1,10 @@
+-> Variable Widths in the byte plots
+-> Locality Button in the byte Plots
+-> Scrolling? Somehow make it more fluid, maybe computer controlled?
+
+-> GDB Integration Module
+-> x86 Dissasembler Module
+-> Conversions Module 
+
+
+-> ALWAYS refactor. No unrequired code smell allowed.

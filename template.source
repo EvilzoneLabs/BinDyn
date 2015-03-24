@@ -6,7 +6,7 @@ CLASSNAME::CLASSNAME()
 	/* Generally you are defining your layout and such here */
 }
 
-void CLASSNAME::analysis(char * fileString, int fileSize, bool locality, QProgressBar * pb)
+void CLASSNAME::analysis(char * fileString, int fileSize, QProgressBar * pb)
 {
 	/* then doing stuff cool here */
 }

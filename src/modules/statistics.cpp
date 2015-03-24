@@ -31,7 +31,7 @@ void Statistics::clean()
 	plot -> clean();
 }
 
-void Statistics::analysis(char * fileString, size_t fileSize, bool locality, QProgressBar * pb)
+void Statistics::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
 	//Setup
 		stats -> clear();
@@ -70,10 +70,9 @@ void Statistics::analysis(char * fileString, size_t fileSize, bool locality, QPr
 		stats->insertPlainText("Average byte value : " + QString::number(avgByte,16));
 		stats->insertPlainText("\nMost Common is : " + QString::number(maxPos,16));
 	pb->setValue(50); //PB
-	//Get Sizes
-		unsigned int * dim = plot -> getSize();
-		unsigned int width = dim[ 0 ];
-		unsigned int height = dim[ 1 ];
+	//Get Sizes -- borked
+		unsigned int width = 1000;
+		unsigned int height = 600;
 	//Generate offsets and pensize
 		unsigned int penSize = height / 255;
 		unsigned int xOffset = (width - (255 * penSize)) / 2;

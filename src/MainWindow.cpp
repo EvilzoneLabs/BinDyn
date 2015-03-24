@@ -14,7 +14,6 @@
 
 #include "MainWindow.h"
 #include "modules/bytePlot.h"
-#include "modules/conversions.h"
 #include "modules/digraph.h"
 #include "modules/entropyMap.h"
 #include "modules/hexEdit.h"
@@ -24,6 +23,8 @@
 #include "modules/statistics.h"
 #include "modules/stringScan.h"
 #include "modules/dissasemble.h"
+#include "modules/gdbIntegrate.h"
+#include "modules/conversions.h"
 
 MainWindow::MainWindow( )
 {
@@ -51,9 +52,10 @@ MainWindow::MainWindow( )
 		QPushButton *fileBtn = new QPushButton( "Open File", this );
 		QPushButton *analysisBtn = new QPushButton( "Run Analysis", this );
 		QPushButton *saveBtn = new QPushButton( "Save File", this );
-		localityBtn = new QCheckBox( "Preserve Locality?", this );
 		startSld = new QSlider( Qt::Horizontal, this );
 		endSld = new QSlider( Qt::Horizontal, this );
+		startOffset = new QLineEdit(QString("0"));
+		stopOffset = new QLineEdit(QString("0"));
 	//Config the Button Bars
 		fileNameLabel->setText( "FileName:" );
 		startSldLabel->setText( "Start Point" );
@@ -62,23 +64,29 @@ MainWindow::MainWindow( )
 		startSld->setValue( 0 );  
 		endSld->setRange( 0,100 );
 		endSld->setValue( 100 );
+		startOffset->setMaximumWidth(100);
+		stopOffset->setMaximumWidth(100);
 	//Connect the buttons to slots
 		QObject::connect( analysisBtn, SIGNAL( clicked( ) ),this, SLOT(analysisChoice( ) ) ); 
 		QObject::connect( saveBtn, SIGNAL( clicked( ) ),this, SLOT(saveFile( ) ) ); 
 		QObject::connect( fileBtn, SIGNAL( clicked( ) ),this, SLOT(fileDialog( ) ) ); 
+	//Connect the sliders to the offset values
+		QObject::connect(startSld,SIGNAL(valueChanged(int)),this,SLOT(updateStartOffset(int)));
+		QObject::connect(endSld,SIGNAL(valueChanged(int)),this,SLOT(updateEndOffset(int)));
 	//Create the ButtonBar and Add it to the main Windows layout
 		topLeft->addWidget( fileBtn );
 		topLeft->addWidget( fileNameLabel );
 		topLeft->addWidget( fileName );
 		topRight->addWidget( startSldLabel );
 		topRight->addWidget( startSld );
+		topRight->addWidget( startOffset );
 		left->addLayout( topLeft );
 		right->addLayout( topRight );   
 		bottomLeft->addWidget(  saveBtn  );
 		bottomLeft->addWidget( analysisBtn );
-		bottomLeft->addWidget( localityBtn );
 		bottomRight->addWidget( endSldLabel );
-		bottomRight->addWidget( endSld );  
+		bottomRight->addWidget( endSld ); 
+		bottomRight->addWidget( stopOffset ); 
 		left->addLayout( bottomLeft );
 		right->addLayout( bottomRight );
 		barLayout->addLayout( left );
@@ -95,16 +103,19 @@ MainWindow::MainWindow( )
 		tab_widget->addTab( new PrintableMap( ), "Printable Map" );
 		tab_widget->addTab( new EntropyMap( ), "Entropy Map" );
 		tab_widget->addTab( new SelfSim( ), "Self Similarity Plot" );
-		//tab_widget->addTab( new Conversions( ), "Conversion Aide" );
+		tab_widget->addTab( new Conversions( ), "Conversion Aide" );
 		tab_widget->addTab( new Dissasemble( ), "Dissasembler Helper" );
+		tab_widget->addTab( new GDBrun( ), "GDB Integration" );
 		mainLayout->addWidget( tab_widget );
 	//Generate the progress bar and set the layout
 		pb = new QProgressBar(  );
 		mainLayout->addWidget( pb );
 		setLayout( mainLayout );
+	//Also these default values
+		fileSize = 0;
+		fileString = NULL;
 }
 
-	
 //These two are pretty self explanatory yeah?
 void MainWindow::fileDialog( )
 {
@@ -117,15 +128,19 @@ void MainWindow::fileDialog( )
 	fileString = new char [fileSize];
 	readFile.read( fileString,fileSize );
 	readFile.close( );
+	stopOffset->setText(QString::number(fileSize));
 }
     
 void MainWindow::saveFile( )
 {
+	if(!fileSize) return;
 	QString sname = QFileDialog::getSaveFileName( this, "Save file", "/home" );
 	QFile writeFile( sname );
 	writeFile.open( QIODevice::WriteOnly );
-	size_t startpoint = fileSize * startSld->value( ) / 100;
-	size_t endpoint = fileSize * endSld->value( ) / 100;
+	
+	size_t startpoint = startOffset->text().toInt();
+	size_t endpoint = stopOffset->text().toInt();
+	
 	writeFile.write( fileString + startpoint , endpoint - startpoint );
 	writeFile.close( );
 }
@@ -133,19 +148,29 @@ void MainWindow::saveFile( )
 void MainWindow::analysisChoice( )
 {
 	clearWidgets();
-	size_t startpoint = fileSize * startSld->value( ) / 100;
-	size_t endpoint = fileSize * endSld->value( ) / 100;
+	size_t startpoint = startOffset->text().toInt();
+	size_t endpoint = stopOffset->text().toInt();
 	if( fileSize <= 0 || endpoint < startpoint) return; // No seg faults here man
 	size_t tFileSize = endpoint - startpoint;
 	pb->setValue(0);
 	//calls a child method (analysis) of the current tab 
 	QMetaObject::invokeMethod( tab_widget->currentWidget( ),"analysis",Qt::DirectConnection,
-		Q_ARG( char *,fileString + startpoint ),Q_ARG ( size_t,tFileSize ),
-		Q_ARG( bool,localityBtn->isChecked( ) ),Q_ARG( QProgressBar *, pb ) );
+		Q_ARG( char *,fileString + startpoint ),Q_ARG ( size_t,tFileSize ),Q_ARG( QProgressBar *, pb ) );
 }
 
 void MainWindow::clearWidgets()
 {
 	for (int i = 0; i < tab_widget->count(); i++)
+		if ( i != tab_widget -> currentIndex())
 			QMetaObject::invokeMethod( tab_widget->widget(i),"clean",Qt::DirectConnection);
+}
+
+void MainWindow::updateStartOffset(int value)
+{
+	startOffset->setText(QString("%1").arg(value * fileSize / 100));
+}
+
+void MainWindow::updateEndOffset(int value)
+{
+	stopOffset->setText(QString("%1").arg(value * fileSize / 100));
 }

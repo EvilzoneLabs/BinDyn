@@ -17,6 +17,7 @@
 #include <QProgressBar>
 #include <QString>
 #include <QFileDialog>
+#include <QLineEdit>
 
 class MainWindow : public QWidget 
 {	
@@ -27,17 +28,19 @@ class MainWindow : public QWidget
 		void saveFile( );
 		void analysisChoice( );
 		void clearWidgets( );
-
+		void updateStartOffset(int);
+		void updateEndOffset(int);
 	public:
 		MainWindow( );
-	
-	private:
 		QLabel * fileName;
+	private:
 		QTabWidget * tab_widget;
-		size_t fileSize = 0;
-		char * fileString = NULL;
+		size_t fileSize;
+		char * fileString;
 		QSlider * startSld;
 		QSlider * endSld;
-		QCheckBox * localityBtn;
+		QLineEdit * startOffset;
+		QLineEdit * stopOffset;
 		QProgressBar * pb;
+		
 };

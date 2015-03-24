@@ -32,8 +32,9 @@ void BytePlot::clean()
 	plot -> clean();
 }
 
-void BytePlot::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void BytePlot::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
+	bool locality = 0;
 	//Allocate the point array
 		point * localPoints = new point[ fileSize ];
 	size_t pbChunk = fileSize / 100; //Progress bar thing

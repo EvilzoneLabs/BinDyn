@@ -16,7 +16,7 @@ class HexEditor : public QWidget
 		HexEditor();
 	
 	public slots:
-		void analysis( char *,  size_t, bool, QProgressBar * );
+		void analysis( char *,  size_t, QProgressBar * );
 		void clean();
 		
 	private:

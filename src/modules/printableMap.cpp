@@ -63,8 +63,9 @@ void PrintableMap::clean()
 	plot -> clean();
 }
 
-void PrintableMap::analysis(char * fileString, size_t fileSize, bool locality, QProgressBar * pb)
+void PrintableMap::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
+	bool locality = 0;
 	//Generate the point array
 	point * localPoints = new point[ fileSize ];
 	//Progress bar thing

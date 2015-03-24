@@ -37,7 +37,7 @@ void SelfSim::clean()
 	plot->clean();
 }
 
-void SelfSim::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void SelfSim::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
 	//I can't let you do that to yourself.
 	if (fileSize > 20000) return;

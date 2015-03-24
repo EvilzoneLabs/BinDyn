@@ -33,7 +33,7 @@ void Digraph::clean()
 	plot -> clean();
 }
 
-void Digraph::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void Digraph::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
 	//Get The Data
 		int digraphArray[257][257] = {0};
@@ -45,10 +45,10 @@ void Digraph::analysis( char * fileString, size_t fileSize, bool locality, QProg
 			digraphArray[ x ][ y ]++;
 		}
 	pb->setValue(25); //Progress Bar
-	//Get Sizes
+	//Get Sizes -- currently borked
 		unsigned int * dim = plot->getSize();
-		unsigned int width = dim[0];
-		unsigned int height = dim[1];	
+		unsigned int width = 1000;
+		unsigned int height = 600;
 	//Generate offsets and pensize
 		unsigned int penSize = height / 255;
 		unsigned int xOffset = (width - (255 * penSize)) / 2;
@@ -67,14 +67,14 @@ void Digraph::analysis( char * fileString, size_t fileSize, bool locality, QProg
 				if ( pointBrightness > 255 ) pointBrightness = 255; 
 				//Here be the fucked up lines which places the point in the array in the right spot.
 					pointsOffset = ( ( x * 255 ) + y );
-					localPoints[ pointsOffset ].x = x * penSize + xOffset;
-					localPoints[ pointsOffset ].y = y * penSize + yOffset;
+					localPoints[ pointsOffset ].x = (x * penSize) + xOffset;
+					localPoints[ pointsOffset ].y = (y * penSize) + yOffset;
 					localPoints[ pointsOffset ].r = static_cast <unsigned char>(pointBrightness);
 					localPoints[ pointsOffset ].g = 0;
 					localPoints[ pointsOffset ].b = 0;
 			}
 		}
 	pb->setValue(75);
-	plot->plot(localPoints, penSize, 65535, width, height ); //Do not question the magic number
+	plot->plot(localPoints, penSize, 65535, 1000, 1000 ); //Do not question the magic number
 	pb->setValue(100);
 }

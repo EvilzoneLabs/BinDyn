@@ -18,7 +18,7 @@ Conversions::Conversions( )
 {
 }
 
-void Conversions::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void Conversions::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
 }
 

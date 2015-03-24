@@ -28,10 +28,11 @@ void StringScan::clean()
 	textOutput->clear();
 }
 
-void StringScan::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void StringScan::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
 	QString tempString;
 	size_t pbChunk = fileSize / 100; //Progress bar thing
+	if (!pbChunk) pbChunk = 1;
 	for (size_t counter = 0; counter < fileSize; counter++)
 	{
 		if (!(counter % pbChunk)) pb->setValue(pb->value() + 1); //Progress Bar

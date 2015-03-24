@@ -44,12 +44,13 @@ void HexEditor::clean()
 	ascii->clear();
 }
 
-void HexEditor::analysis(char * fileString, size_t fileSize, bool locality, QProgressBar * pb)
+void HexEditor::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
 	//Look at this alpha stage hack of a hex editor xD
 	QString asciiText;
 	QString hexText;
 	size_t pbChunk = fileSize / 100; //Progress bar thing
+	if (!pbChunk) pbChunk = 1;
 	const int lineLength = 35;
 	QChar controlChar = ' ';
 	unsigned int temp = 0;	

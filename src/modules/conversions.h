@@ -14,6 +14,6 @@ class Conversions : public QWidget
 		Conversions( );
 	
 	public slots:
-		void analysis( char *, size_t, bool, QProgressBar * );
+		void analysis( char *, size_t, QProgressBar * );
 		void clean();
 };

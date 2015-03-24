@@ -27,7 +27,7 @@ void SignatureScan::clean()
 {
 	textOutput->clear();
 }
-void SignatureScan::analysis(char * fileString, size_t fileSize, bool locality, QProgressBar * pb)
+void SignatureScan::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
 	const int numSigs = 12; //Remember to change this
 	QString signatureList[numSigs][2] = {{"DOS mode","PE"},

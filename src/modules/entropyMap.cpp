@@ -67,8 +67,9 @@ void EntropyMap::clean()
 	plot -> clean();
 }
 
-void EntropyMap::analysis( char * fileString, size_t fileSize, bool locality, QProgressBar * pb )
+void EntropyMap::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
+	bool locality = 0;
 	//Set up some variables
 		unsigned int jumpSize = jump -> value();
 		unsigned int windowRange = range -> value();

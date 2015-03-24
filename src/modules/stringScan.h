@@ -12,7 +12,7 @@ class StringScan : public QWidget
 	Q_OBJECT
 	
 	public slots:
-		void analysis( char*, size_t, bool, QProgressBar * );
+		void analysis( char*, size_t, QProgressBar * );
 		void clean();
 		
 	public:

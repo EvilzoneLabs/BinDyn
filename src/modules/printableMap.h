@@ -22,7 +22,7 @@ class PrintableMap : public QWidget
 		void printableColorDialog( );
 		void aboveColorDialog( );
 		void ffColorDialog( );
-		void analysis(char * , size_t, bool, QProgressBar * );
+		void analysis(char * , size_t, QProgressBar * );
 		void clean();
 	
 	private:
