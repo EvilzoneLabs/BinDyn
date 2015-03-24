@@ -43,6 +43,7 @@ void SelfSim::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 	if (fileSize > 20000) return;
 	//Progress bar thing
 	size_t pbChunk = fileSize / 100;	
+	if (!pbChunk) pbChunk = 1;
 	point * localPoints = new point[ fileSize * fileSize ];
 	unsigned int offset = 0;
 	for (size_t x = 0; x < fileSize; x++)

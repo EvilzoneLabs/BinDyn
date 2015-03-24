@@ -11,6 +11,7 @@
 #include <QProgressBar>
 #include <QObject>
 #include <QScrollArea>
+#include <QCheckBox>
 
 class EntropyMap : public QWidget
 {
@@ -31,5 +32,6 @@ class EntropyMap : public QWidget
 		QSlider * range;
 		QLineEdit * threshold;
 		QScrollArea * scroll;
+		QCheckBox * locality;
 		unsigned char entropy(unsigned char*, unsigned int); 
 };

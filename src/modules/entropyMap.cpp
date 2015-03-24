@@ -26,6 +26,7 @@
 EntropyMap::EntropyMap()
 {
 	//Dat Layout Objects
+		locality = new QCheckBox(" Preserve Locality?");
 		output = new QTextEdit;
 		threshold = new QLineEdit( );
 		threshold -> setText( "150" );
@@ -46,6 +47,7 @@ EntropyMap::EntropyMap()
 		QVBoxLayout * layout = new QVBoxLayout( );
 		QHBoxLayout * bottom = new QHBoxLayout( );
 		QHBoxLayout * buttons = new QHBoxLayout( );
+		buttons -> addWidget(locality);
 		buttons -> addWidget( listThreshold );
 		buttons -> addWidget( thresholdLabel );
 		buttons -> addWidget( threshold );
@@ -69,7 +71,6 @@ void EntropyMap::clean()
 
 void EntropyMap::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
-	bool locality = 0;
 	//Set up some variables
 		unsigned int jumpSize = jump -> value();
 		unsigned int windowRange = range -> value();
@@ -78,8 +79,9 @@ void EntropyMap::analysis( char * fileString, size_t fileSize, QProgressBar * pb
 	//Set up the Point array
 		point * localPoints = new point[ fileSize / jumpSize ];
 	//Progress bar thing
-		size_t pbChunk = (fileSize / jumpSize)  / 100;		
-	if (!locality)
+		size_t pbChunk = (fileSize / jumpSize)  / 100;	
+		if (!pbChunk) pbChunk = 1;	
+	if (!locality->isChecked())
 	{
 		//Get Sizes 
 			unsigned int width = scroll->width() - 10;

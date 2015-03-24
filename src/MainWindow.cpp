@@ -50,7 +50,7 @@ MainWindow::MainWindow( )
 		QLabel *startSldLabel = new QLabel( );
 		QLabel *endSldLabel = new QLabel( );
 		QPushButton *fileBtn = new QPushButton( "Open File", this );
-		QPushButton *analysisBtn = new QPushButton( "Run Analysis", this );
+		QPushButton *analysisBtn = new QPushButton( "Run Module", this );
 		QPushButton *saveBtn = new QPushButton( "Save File", this );
 		startSld = new QSlider( Qt::Horizontal, this );
 		endSld = new QSlider( Qt::Horizontal, this );

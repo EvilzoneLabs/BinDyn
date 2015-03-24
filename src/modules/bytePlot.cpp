@@ -38,6 +38,7 @@ void BytePlot::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 	//Allocate the point array
 		point * localPoints = new point[ fileSize ];
 	size_t pbChunk = fileSize / 100; //Progress bar thing
+	if (!pbChunk) pbChunk = 1;
 	unsigned char temp = 0;
 	//Get Sizes
 		unsigned int width = scroll->width() - 10;

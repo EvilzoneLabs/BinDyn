@@ -29,6 +29,7 @@ PrintableMap::PrintableMap()
 		aboveCol.setRgb( 0, 0, 255 );
 		ffCol.setRgb( 255, 255, 255 );
 	//Buttons
+		locality = new QCheckBox(" Preserve Locality?");
 		QPushButton * nullBtn = new QPushButton( "Null Color" );
 		QPushButton * belowBtn = new QPushButton( "<32 Color" );
 		QPushButton * printableBtn = new QPushButton( "Printable Color" );
@@ -42,6 +43,7 @@ PrintableMap::PrintableMap()
 		QObject::connect( ffBtn, SIGNAL( clicked() ),this, SLOT( ffColorDialog() ) );  
 	//Button Bar
 		QHBoxLayout * buttonBar = new QHBoxLayout();
+		buttonBar -> addWidget( locality);
 		buttonBar -> addWidget( nullBtn );
 		buttonBar -> addWidget( ffBtn );
 		buttonBar -> addWidget( printableBtn );
@@ -65,18 +67,18 @@ void PrintableMap::clean()
 
 void PrintableMap::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
-	bool locality = 0;
 	//Generate the point array
 	point * localPoints = new point[ fileSize ];
 	//Progress bar thing
-		size_t pbChunk = fileSize / 100;	
+		size_t pbChunk = fileSize / 100;
+		if (!pbChunk) pbChunk = 1;
 	//Get Sizes
 		unsigned int width = scroll -> width() - 10;
 		unsigned int height = scroll -> height();
 	//Get penSize
 		unsigned int penSize = sqrt( (width * height) / fileSize );
 		if (penSize == 0) { penSize = 1; }
-	if (!locality)
+	if (!locality->isChecked())
 	{
 		//Get Colors	
 			for ( size_t counter = 0; counter < fileSize; counter++ )

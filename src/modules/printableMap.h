@@ -8,6 +8,7 @@
 #include <QProgressBar>
 #include <QColor>
 #include <QScrollArea>
+#include <QCheckBox>
 
 class PrintableMap : public QWidget
 {
@@ -33,5 +34,6 @@ class PrintableMap : public QWidget
 		QColor belowCol;
 		QColor printableCol;
 		QScrollArea * scroll;
+		QCheckBox * locality;
 		void getPointRgb(unsigned char, point *, size_t);
 };
