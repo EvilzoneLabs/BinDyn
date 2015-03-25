@@ -1,4 +1,6 @@
 -> Scrolling? Somehow make it more fluid, maybe computer controlled?
+-> autoscroll by passing the QScrollArea Pointer and scroll speed info,
+-> need to figure out the best place to have that, the controls for it I mean
 
 -> GDB Integration Module -> Polish off
 -> x86 Dissasembler Module -> Polish Off
@@ -8,9 +10,3 @@
 -> tiny bug in some plotters where they dont show the first line, fix inside plotter.cpp.
 -> only happens to smalllll files (sub 500 bytes)
 
-Unfinised Module List ( max 5): 
-
-Conversion Aide
-Dissasembler Helper
-GDB Integration
-Header Analysis
