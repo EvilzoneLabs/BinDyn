@@ -25,10 +25,11 @@
 #include "modules/dissasemble.h"
 #include "modules/gdbIntegrate.h"
 #include "modules/conversions.h"
+#include "modules/headers.h"
 
 MainWindow::MainWindow( )
 {
-	setWindowTitle( QString::fromUtf8( "BinDyn - A Dynamic Visual Binary Analysis Engine" ) );
+	setWindowTitle( QString::fromUtf8( "BinDyn - DEV VERSION" ) );
 	//Center one monitor in a horizontal array and FullScreen the app
 		QDesktopWidget * desktop = QApplication::desktop( );
 		int screenWidth = desktop->width( ) / desktop->screenCount( ) ;
@@ -51,13 +52,13 @@ MainWindow::MainWindow( )
 		QLabel *endSldLabel = new QLabel( );
 		QPushButton *fileBtn = new QPushButton( "Open File", this );
 		QPushButton *analysisBtn = new QPushButton( "Run Module", this );
-		QPushButton *saveBtn = new QPushButton( "Save File", this );
+		QPushButton *saveBtn = new QPushButton( "Export File", this );
 		startSld = new QSlider( Qt::Horizontal, this );
 		endSld = new QSlider( Qt::Horizontal, this );
 		startOffset = new QLineEdit(QString("0"));
 		stopOffset = new QLineEdit(QString("0"));
 	//Config the Button Bars
-		fileNameLabel->setText( "FileName:" );
+		fileNameLabel->setText( "File Name:" );
 		startSldLabel->setText( "Start Point" );
 		endSldLabel->setText( "End Point" );
 		startSld->setRange( 0,100 );
@@ -66,7 +67,7 @@ MainWindow::MainWindow( )
 		endSld->setValue( 100 );
 		startOffset->setMaximumWidth(100);
 		stopOffset->setMaximumWidth(100);
-	//Connect the buttons to slots
+	//Connect the buttons to their respective functions
 		QObject::connect( analysisBtn, SIGNAL( clicked( ) ),this, SLOT(analysisChoice( ) ) ); 
 		QObject::connect( saveBtn, SIGNAL( clicked( ) ),this, SLOT(saveFile( ) ) ); 
 		QObject::connect( fileBtn, SIGNAL( clicked( ) ),this, SLOT(fileDialog( ) ) ); 
@@ -93,20 +94,27 @@ MainWindow::MainWindow( )
 		barLayout->addLayout( right );    
 		mainLayout->addLayout( barLayout );
 	//Generate the tab bar and tabs
+	/*	**************************************************************/
+	//Prospective Users, if you write your own module this is the ONLY
+	//Place where you should add it/edit code, well, this and including
+	//The header file, all passing/mem management is done dynamically
+	/* ***************************************************************/
 		tab_widget = new QTabWidget( this ); 
 		tab_widget->addTab( new SignatureScan( ), "Signature Scan" );
 		tab_widget->addTab( new StringScan( ), "String Dump" );
 		tab_widget->addTab( new HexEditor( ), "Hex Editor" );
 		tab_widget->addTab( new Digraph( ), "Digraph" );
 		tab_widget->addTab( new Statistics( ), "Statistics" );
+		tab_widget->addTab( new SelfSim( ), "Self Similarity Plot" );
 		tab_widget->addTab( new BytePlot( ), "Byte Plot" );
 		tab_widget->addTab( new PrintableMap( ), "Printable Map" );
 		tab_widget->addTab( new EntropyMap( ), "Entropy Map" );
-		tab_widget->addTab( new SelfSim( ), "Self Similarity Plot" );
 		tab_widget->addTab( new Conversions( ), "Conversion Aide" );
 		tab_widget->addTab( new Dissasemble( ), "Dissasembler Helper" );
 		tab_widget->addTab( new GDBrun( ), "GDB Integration" );
+		tab_widget->addTab( new Headers( ), "Header Analysis" );
 		mainLayout->addWidget( tab_widget );
+		
 	//Generate the progress bar and set the layout
 		pb = new QProgressBar(  );
 		mainLayout->addWidget( pb );
@@ -134,7 +142,7 @@ void MainWindow::fileDialog( )
 void MainWindow::saveFile( )
 {
 	if(!fileSize) return;
-	QString sname = QFileDialog::getSaveFileName( this, "Save file", "/home" );
+	QString sname = QFileDialog::getSaveFileName( this, "Export file", "/home" );
 	QFile writeFile( sname );
 	writeFile.open( QIODevice::WriteOnly );
 	

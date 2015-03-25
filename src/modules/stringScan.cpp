@@ -47,4 +47,5 @@ void StringScan::analysis( char * fileString, size_t fileSize, QProgressBar * pb
 		}
 		else tempString.clear();
 	}
+	pb->setValue(100);
 }

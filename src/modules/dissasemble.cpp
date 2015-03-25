@@ -17,36 +17,40 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include "dissasemble.h"
+#include <QString>
+#include <QFile>
 
 Dissasemble::Dissasemble( )
 {
 	//Generate Layout
         QHBoxLayout * mainLayout = new QHBoxLayout();
-		addresses = new QTextEdit();
 		dissasembly = new QTextEdit();
-		notes = new QTextEdit();
-		mainLayout -> addWidget( addresses );
 		mainLayout -> addWidget( dissasembly );
-		mainLayout -> addWidget( notes );
-		addresses -> setMaximumWidth(200);
-		notes -> setMaximumWidth(300);
 		setLayout( mainLayout );
-	//Connect the Scrollbars
-		QObject::connect(addresses -> verticalScrollBar(), SIGNAL(valueChanged(int)), dissasembly -> verticalScrollBar(), SLOT(setValue(int)));
-		QObject::connect(addresses -> verticalScrollBar(), SIGNAL(valueChanged(int)), notes -> verticalScrollBar(), SLOT(setValue(int)));
-		QObject::connect(dissasembly -> verticalScrollBar(), SIGNAL(valueChanged(int)), addresses -> verticalScrollBar(), SLOT(setValue(int)));
-		QObject::connect(dissasembly -> verticalScrollBar(), SIGNAL(valueChanged(int)), notes -> verticalScrollBar(), SLOT(setValue(int)));
-		QObject::connect(notes -> verticalScrollBar(), SIGNAL(valueChanged(int)), dissasembly -> verticalScrollBar(), SLOT(setValue(int)));
-		QObject::connect(notes -> verticalScrollBar(), SIGNAL(valueChanged(int)), addresses -> verticalScrollBar(), SLOT(setValue(int)));
 }
 
 void Dissasemble::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
+	//Make Temp File
+	dissasembly->clear();
+	QFile writeFile("/tmp/bindyn");
+	writeFile.open( QIODevice::WriteOnly );
+	writeFile.write( fileString, fileSize);
+	writeFile.close( );
+	
+	//Run objdump on temp file
+	objdumpProcess = new QProcess();
+	objdumpProcess->start(QString("objdump -b binary -mi386 -D /tmp/bindyn"));
+	objdumpProcess->waitForFinished();
+	dissasembly->insertPlainText(objdumpProcess->readAllStandardOutput());
+	dissasembly->insertPlainText(objdumpProcess->readAllStandardError());
+	//Delete temp file
+	QFile::remove("/tmp/bindyn");
+	
 }
 
 void Dissasemble::clean()
 {
-	addresses -> clear();
 	dissasembly -> clear();
-	notes -> clear();
 }
+

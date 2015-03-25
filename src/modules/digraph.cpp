@@ -46,13 +46,12 @@ void Digraph::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 		}
 	pb->setValue(25); //Progress Bar
 	//Get Sizes -- currently borked
-		unsigned int * dim = plot->getSize();
-		unsigned int width = 1000;
-		unsigned int height = 600;
+		unsigned int w = width();
+		unsigned int h = height();
 	//Generate offsets and pensize
-		unsigned int penSize = height / 255;
-		unsigned int xOffset = (width - (255 * penSize)) / 2;
-		unsigned int yOffset = (height - (255 * penSize)) / 2;
+		unsigned int penSize = h / 255;
+		unsigned int xOffset = (w - (255 * penSize)) / 2;
+		unsigned int yOffset = (h - (255 * penSize)) / 2;
 	pb->setValue(50); //Progress Bar
 	//Generate the array
 		point * localPoints = new point[65536];

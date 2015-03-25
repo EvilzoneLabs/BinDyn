@@ -72,13 +72,6 @@ Plotter::Plotter()
 {
 }
 	
-unsigned int * Plotter::getSize()
-{
-	unsigned int coords[2];
-	coords[0] = width();
-	coords[1] = height();
-	return coords;
-}
 
 //Props to Wikipedia for the following
 

@@ -46,6 +46,8 @@ void HexEditor::clean()
 
 void HexEditor::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 {
+	hex->clear();
+	ascii->clear();
 	//Look at this alpha stage hack of a hex editor xD
 	QString asciiText;
 	QString hexText;
@@ -72,4 +74,5 @@ void HexEditor::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 	}
 	hex->insertPlainText(hexText);
 	ascii->insertPlainText(asciiText);
+	pb->setValue(100);
 }

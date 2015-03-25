@@ -8,6 +8,7 @@
 #include <QProgressBar>
 #include <QColor>
 #include <QScrollArea>
+#include <QPushButton>
 #include <QCheckBox>
 
 class PrintableMap : public QWidget
@@ -33,7 +34,13 @@ class PrintableMap : public QWidget
 		QColor aboveCol;
 		QColor belowCol;
 		QColor printableCol;
+		QPushButton * nullBtn;
+		QPushButton * belowBtn;
+		QPushButton * printableBtn;
+		QPushButton * aboveBtn;
+		QPushButton * ffBtn;
 		QScrollArea * scroll;
 		QCheckBox * locality;
 		void getPointRgb(unsigned char, point *, size_t);
+		void setBorder(QPushButton *, QColor);
 };

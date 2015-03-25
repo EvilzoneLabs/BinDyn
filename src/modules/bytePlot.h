@@ -7,6 +7,8 @@
 #include <QProgressBar>
 #include <QObject>
 #include <QScrollArea>
+#include <QSlider>
+#include <QLabel>
 
 class BytePlot : public QWidget
 {
@@ -18,8 +20,11 @@ class BytePlot : public QWidget
 	public slots:
 		void analysis( char *, size_t, QProgressBar *);
 		void clean();
+		void updateWidth(int);
 		
 	private:
 		QScrollArea * scroll;
 		Plotter * plot;
+		QSlider * widthSlider;
+		QLabel *userSetWidth;
 };

@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QProgressBar>
 #include <QTextEdit>
-
+#include <QProcess>
 
 class Dissasemble : public QWidget
 {
@@ -20,7 +20,6 @@ class Dissasemble : public QWidget
 		void clean();
 	
 	private:
-		QTextEdit * addresses;
 		QTextEdit * dissasembly;
-		QTextEdit * notes;
+		QProcess * objdumpProcess;
 };

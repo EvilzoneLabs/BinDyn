@@ -1,12 +1,16 @@
--> Variable Widths in the byte plots
 -> Scrolling? Somehow make it more fluid, maybe computer controlled?
--> printable map, add colors.
 
 -> GDB Integration Module -> Polish off
--> x86 Dissasembler Module -> do the same way as GDB but using rasm2
+-> x86 Dissasembler Module -> Polish Off
 -> Conversions Module -> Implement this, it's been here forever!
+-> Header reader, modulable itself.
 
--> Bug in getSize() returns 0s and thus fucks with non dynamically sized plots, lok into this.
--> Bug in stats somewhere crashes with floating point error if the file is small enough
--> Bug in some of the plotter functions just display nada with small files
+-> tiny bug in some plotters where they dont show the first line, fix inside plotter.cpp.
+-> only happens to smalllll files (sub 500 bytes)
 
+Unfinised Module List ( max 5): 
+
+Conversion Aide
+Dissasembler Helper
+GDB Integration
+Header Analysis

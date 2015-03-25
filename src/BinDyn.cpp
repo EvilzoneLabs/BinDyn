@@ -1,7 +1,6 @@
 /*
 * Visual Binary Profiler By HTH
 * Credit to Schalla for the Idea
-* Released under the MIT License
 */
 
 #include "MainWindow.h"

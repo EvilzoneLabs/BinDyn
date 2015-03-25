@@ -14,7 +14,6 @@
 
 #include "printableMap.h"
 #include <QColorDialog>
-#include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <cmath>
@@ -30,11 +29,11 @@ PrintableMap::PrintableMap()
 		ffCol.setRgb( 255, 255, 255 );
 	//Buttons
 		locality = new QCheckBox(" Preserve Locality?");
-		QPushButton * nullBtn = new QPushButton( "Null Color" );
-		QPushButton * belowBtn = new QPushButton( "<32 Color" );
-		QPushButton * printableBtn = new QPushButton( "Printable Color" );
-		QPushButton * aboveBtn = new QPushButton( ">127 Color" );
-		QPushButton * ffBtn = new QPushButton( "FF Color" );
+		nullBtn = new QPushButton( "Null Color" );
+		belowBtn = new QPushButton( "<32 Color" );
+		printableBtn = new QPushButton( "Printable Color" );
+		aboveBtn = new QPushButton( ">127 Color" );
+		ffBtn = new QPushButton( "FF Color" );
 	//connect the buttons
 		QObject::connect( nullBtn, SIGNAL( clicked() ),this, SLOT( nullColorDialog() ) );
 		QObject::connect( belowBtn, SIGNAL( clicked() ),this, SLOT( belowColorDialog() ) );
@@ -49,6 +48,11 @@ PrintableMap::PrintableMap()
 		buttonBar -> addWidget( printableBtn );
 		buttonBar -> addWidget( aboveBtn );
 		buttonBar -> addWidget( belowBtn );    
+		setBorder(nullBtn, nullCol);
+		setBorder(belowBtn, belowCol);
+		setBorder(printableBtn, printableCol); 
+		setBorder(aboveBtn, aboveCol); 
+		setBorder(ffBtn, ffCol);
 	//THe Plotting/scrolling Section
 		plot = new Plotter();
 		scroll = new QScrollArea();
@@ -134,9 +138,14 @@ void PrintableMap::getPointRgb(unsigned char temp, point * localPoints, size_t c
 	localPoints[counter].b = refCol->blue();
 }
 
+void PrintableMap::setBorder(QPushButton * btn , QColor col)
+{
+	btn -> setStyleSheet(QString("border:3px solid %1").arg(col.name()));
+}
+
 //I don't want to talk about these functions, don't even mention them.
-void PrintableMap::nullColorDialog( ) { nullCol = QColorDialog::getColor( ); }
-void PrintableMap::belowColorDialog()  { belowCol = QColorDialog::getColor( ); }
-void PrintableMap::printableColorDialog( ) { printableCol = QColorDialog::getColor( ); }
-void PrintableMap::aboveColorDialog( ) { aboveCol = QColorDialog::getColor( ); }
-void PrintableMap::ffColorDialog( ) { ffCol = QColorDialog::getColor( ); }
+void PrintableMap::nullColorDialog( ) { nullCol = QColorDialog::getColor( ); setBorder(nullBtn, nullCol); }
+void PrintableMap::belowColorDialog()  { belowCol = QColorDialog::getColor( ); setBorder(belowBtn, belowCol);}
+void PrintableMap::printableColorDialog( ) { printableCol = QColorDialog::getColor( ); setBorder(printableBtn, printableCol); }
+void PrintableMap::aboveColorDialog( ) { aboveCol = QColorDialog::getColor( ); setBorder(aboveBtn, aboveCol); }
+void PrintableMap::ffColorDialog( ) { ffCol = QColorDialog::getColor( ); setBorder(ffBtn, ffCol);}

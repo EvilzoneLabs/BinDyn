@@ -61,8 +61,12 @@ void Statistics::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 		for ( unsigned int counter = 2; counter < 255; counter++)
 			if ( values[ counter ] > values[ maxPos ])
 				maxPos = counter;	
+		pb->setValue(30);
+		if (!values[maxPos]) values[maxPos]++;
 	//Average
+		if (!sum) sum++;
 		int avgByte = sum / fileSize;
+		pb->setValue(40); 
 	//Say things
 		stats->insertPlainText("Out of: " + QString::number(fileSize) + " bytes\n");
 		stats->insertPlainText(QString::number(values[0]) + " 0x00 bytes\n");
@@ -71,12 +75,13 @@ void Statistics::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 		stats->insertPlainText("\nMost Common is : " + QString::number(maxPos,16));
 	pb->setValue(50); //PB
 	//Get Sizes -- borked
-		unsigned int width = 1000;
-		unsigned int height = 600;
+		unsigned int w = width();
+		unsigned int h = height();
 	//Generate offsets and pensize
-		unsigned int penSize = height / 255;
-		unsigned int xOffset = (width - (255 * penSize)) / 2;
-		unsigned int yOffset = (height - (255 * penSize)) / 2;
+		unsigned int penSize = h / 255;
+		if (!penSize) penSize++;
+		unsigned int xOffset = (w - (255 * penSize)) / 2;
+		unsigned int yOffset = (h - (255 * penSize)) / 2;
 	//Fill the Array
 		int pOffset = 0;
 		for (unsigned int x = 0; x < 255; x++)
@@ -92,6 +97,6 @@ void Statistics::analysis(char * fileString, size_t fileSize, QProgressBar * pb)
 			}
 		}
 	pb->setValue(75); //PB
-	plot -> plot(localPoints, penSize, 256 * 256, width, height );
+	plot -> plot(localPoints, penSize, 256 * 256, w, h );
 	pb->setValue(100); //PB
 }

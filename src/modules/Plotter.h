@@ -25,7 +25,6 @@ class Plotter : public QWidget
 		Plotter(); 
 		void plot(point *, unsigned int, size_t, unsigned short int, unsigned int );
 		void clean();
-		unsigned int * getSize( );
 		void d2xy( int, int, int *, int * );
 		int xy2d ( int, int, int );
 		

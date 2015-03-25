@@ -41,7 +41,7 @@ GDBrun::GDBrun( )
 
 void GDBrun::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 {
-	gdbProcess->start(QString("gdb"), QIODevice::ReadWrite | QIODevice::Unbuffered);
+	gdbProcess->start(QString("gdb"), QIODevice::ReadWrite);
 	
 }
 
@@ -53,12 +53,15 @@ void GDBrun::clean()
 
 void GDBrun::processOutput()
 {
-	gdbOutput->append(gdbProcess->readAllStandardOutput()); // read normal output
+	gdbOutput->insertPlainText(gdbProcess->readAllStandardOutput());
+	gdbOutput->insertPlainText(gdbProcess->readAllStandardError()); 
 }
 
 void GDBrun::sendCommand()
 {
-	gdbOutput->append(command->text().toLocal8Bit() + '\n');
-	gdbProcess->write(command->text().toLocal8Bit() + '\n');
+	gdbOutput->insertPlainText(command->text().toLocal8Bit() + '\n');
+	gdbProcess->write((command->text()  + '\n' ).toLocal8Bit());
+	gdbProcess -> waitForReadyRead();
 	command -> clear();
+	processOutput();
 }
