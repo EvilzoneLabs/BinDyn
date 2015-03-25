@@ -55,6 +55,8 @@ void Digraph::analysis( char * fileString, size_t fileSize, QProgressBar * pb )
 	pb->setValue(50); //Progress Bar
 	//Generate the array
 		point * localPoints = new point[65536];
+		for (int i = 0; i < 65536; i++)
+			localPoints[i].x = localPoints[i].y = localPoints[i].r = localPoints[i].g = localPoints[i].b = 0;
 		unsigned int pointBrightness = 0;
 		unsigned int brightnessValue = brightness->value();
 		unsigned int pointsOffset = 0;

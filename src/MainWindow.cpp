@@ -158,7 +158,7 @@ void MainWindow::analysisChoice( )
 	clearWidgets();
 	size_t startpoint = startOffset->text().toInt();
 	size_t endpoint = stopOffset->text().toInt();
-	if( fileSize <= 0 || endpoint < startpoint) return; // No seg faults here man
+	if( fileSize <= 0 || endpoint <= startpoint) return; // No seg faults here man
 	size_t tFileSize = endpoint - startpoint;
 	pb->setValue(0);
 	//calls a child method (analysis) of the current tab 
