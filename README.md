@@ -8,14 +8,9 @@ Requires QT4, gdb, and objdump
 
 To compile CD to the main(src) directory then:
 
-make clean (if i forgot to clean it before I push'd)
-
 qmake -project
-
 qmake
-
 make
-
 make clean
 
 After that ./src & and you're on your own, it's all pretty self explanatory.

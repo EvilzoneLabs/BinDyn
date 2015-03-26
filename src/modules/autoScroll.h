@@ -1,6 +1,4 @@
-/*** 
 //Literally Only exists to define autoScroll()
-/***
 
 #include <QScrollArea>
 
