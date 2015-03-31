@@ -4,7 +4,7 @@ Dynamic Binary Analysis Framework
 ---
 
 ###Dependencies  
-* `QT5`
+* `QT4`
 * `gdb` 
 * `objdump` 
 
