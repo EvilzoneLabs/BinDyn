@@ -2,6 +2,7 @@
 
 Dynamic Binary Analysis Framework
 ---
+#NO FUCKS GIVEN IF YOURE AN ASSHAT AND CANT FIGURE THIS SHIT OUT
 
 ###Dependencies  
 * `QT4`
