@@ -1,33 +1,38 @@
-# BinDyn
+#BinDyn  
+
 Dynamic Binary Analysis Framework
+---
+#####NO FUCKS GIVEN IF YOURE AN ASSHAT AND CANT FIGURE THIS SHIT OUT
 
-Requires QT4, gdb, and objdump 
+###Dependencies  
+* `QT4`
+* `gdb` 
+* `objdump` 
 
-(Last two can be ommited if you disable or dont run the modules, or uh, replaced with windows alternatives if you swing that way)
+> Both `gdb` and `objdump` dependencies/modules can be omitted for
+> compatibility with Windows.  
 
+###Compile
 
-To compile CD to the main(src) directory then:
+After the necessary dependencies have been correctly installed.  Building 
+and executing BinDyn should be rather straightforward:
 
-make clean (if i forgot to clean it before I push'd)
+```
+$ cd BinDyn/src/
+$ qmake -project
+$ qmake
+$ make
+$ make clean
+$ ./src
+```
 
-qmake -project
+###Issues
 
-qmake
+On some QT installations, an edit to `BinDyn/src/src.pro` is 
+required in order for QT to properly include the necessary 
+headers. The altered compilation steps are detailed below:
 
-make
-
-make clean
-
-After that ./src & and you're on your own, it's all pretty self explanatory.
-
-
-Finally please keep in mind this is intended as a framework, you can request features but basically the only part I promise will work is the main window that passes file information to the modules.
-You are fully expected to write your own if you please.
-I have however included a simple template for you to program your own modules.
-See the Files: template.header and template.source in this folder?
-
-I wrote this to make my explorations inside files easier/faster/more fun, if u mad cause I decided to include a reference to gdb instead of writing my own debugger... or something else I did that displeased you, welll...
-
-Just Don't.
-
-
+1. Run `qmake -project && qmake`
+2. Open `BinDyn/src/src.pro` in your editor of choice
+3. On line 8 (right before the HEADERS block) add this line: <br>`QT += widgets`
+4. Continue normal compilation with `make && make clean; ./src`
